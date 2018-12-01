@@ -1,6 +1,7 @@
 body {
-  --header-background: #900;
-  --body-background: green;
+  --header-background: #00ffff;
+  --body-background: #ff00ff;
+  --content-background: #ffff00;
   margin: 0;
   background: var(--body-background);
   display: flex;
@@ -38,8 +39,8 @@ nav a:hover {
 }
 
 .content {
+  background: var(--content-background);
   width: 800px;
-  background: #fff;
   min-height: 100%;
   padding: 2em;
 }
