@@ -40,16 +40,20 @@
 
   const warm = () => {
     // console.log('Warming')
-    bodyColor = bodyColor.spin(2);
-    body.style.setProperty('--body-background', bodyColor.css());
-    body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+    if (bodyColor.hsv().h() < 360) {
+      bodyColor = bodyColor.spin(1);
+      body.style.setProperty('--body-background', bodyColor.css());
+      body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+    }
   };
 
   const cool = () => {
     // console.log('Cooling');
-    bodyColor = bodyColor.spin(-2);
-    body.style.setProperty('--body-background', bodyColor.css());
-    body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+    if (bodyColor.hsv().h() > 210) {
+      bodyColor = bodyColor.spin(-1);
+      body.style.setProperty('--body-background', bodyColor.css());
+      body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+    }
   };
 
   detector.detectAllEmotions();
