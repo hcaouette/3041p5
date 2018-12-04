@@ -1,7 +1,7 @@
 body {
-  --header-background: #00ffff;
-  --body-background: #ff00ff;
-  --content-background: #ffff00;
+  --header-background: 	#f64d52;
+  --body-background: #a91834;
+  --content-background: #fff;
   margin: 0;
   background: var(--body-background);
   display: flex;
@@ -43,4 +43,8 @@ nav a:hover {
   width: 800px;
   min-height: 100%;
   padding: 2em;
+}
+
+#video {
+  display: none;
 }

@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>HCI Project 5</title>
 <link href="style.css" rel="stylesheet" type="text/css">
-<!--import Affectiva javascript support-->
+<script src="kolor.js"></script>
 <script src="https://download.affectiva.com/js/3.2/affdex.js"></script>
 
 <!-- Body -->
@@ -11,7 +11,7 @@
   <nav>
     <ul>
       <li><a href="#">Home</a>
-      <li ><button style="background: #00ff00" >Begin!</button>
+      <li><a href="#">Link 1</a>
       <li><a href="#">Link 2</a>
     </ul>
   </nav>
@@ -27,33 +27,46 @@
   <p>Aliquam a dignissim nulla, id efficitur nulla. Suspendisse in lacus nec quam tempus viverra. Pellentesque consequat placerat aliquam. Praesent ante enim, volutpat in neque bibendum, varius blandit augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel orci quis purus mattis facilisis. Nam bibendum viverra malesuada. Phasellus porta rutrum libero in ullamcorper. Morbi non ullamcorper massa, id vehicula nulla. Aliquam eu metus sit amet quam lobortis facilisis.
 
 <p>Quisque at urna ac velit pulvinar hendrerit. Duis sodales lectus sit amet nunc consectetur, non vehicula est egestas. Praesent venenatis eget sapien non auctor. Praesent volutpat enim sit amet lectus interdum egestas. Quisque in sollicitudin urna. Quisque vel sem feugiat metus blandit blandit id sit amet lacus. Cras consectetur ullamcorper risus. Duis sed est condimentum lectus suscipit tempus non quis magna. Nam id placerat est. Ut nec semper ipsum. Duis nibh arcu, venenatis vitae condimentum eget, imperdiet ac felis. Curabitur congue hendrerit neque, in rhoncus dui vestibulum nec. Aliquam aliquam sem sed lorem mollis, ac mollis odio placerat.
-</div>   
+</div>
 <div id='video'></div>
-<div id='emoji'></div>
 <script>
-    window.onload = function() {
-      const videoWidth = 640, videoHeight = 480
-      const faceMode = affdex.FaceDetectorMode.LARGE_FACES
-      
-      const detector = new affdex.CameraDetector(
-        document.querySelector('#video'),
-        videoWidth, videoHeight, faceMode
-      )
-      
-      //detector.detectEmotions.joy = true
-      detector.detectAllEmojis()
-	  
-	  detector.detectAllEmotions();
-	  detector.detectAllExpressions();
-	  detector.detectAllAppearance();
-      
-      detector.addEventListener( 'onImageResultsSuccess', function( faces ) {
-        if( faces.length > 0 ) {
-          document.querySelector('#emoji').innerText = faces[0].emojis.dominantEmoji
-		  document.querySelector('#emoji').innerText = faces[0].emotions.dominantEmotion
-        }
-      })
-	  
-      detector.start()
+  const videoWidth = 640;
+  const videoHeight = 480
+  const faceMode = affdex.FaceDetectorMode.LARGE_FACES;
+  const video = document.querySelector('#video');
+  const body = document.querySelector('body');
+  const detector = new affdex.CameraDetector(video, videoWidth, videoHeight, faceMode);
+  let bodyColor = kolor('#a91834');
+
+  const warm = () => {
+    // console.log('Warming')
+    bodyColor = bodyColor.spin(2);
+    body.style.setProperty('--body-background', bodyColor.css());
+    body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+  };
+
+  const cool = () => {
+    // console.log('Cooling');
+    bodyColor = bodyColor.spin(-2);
+    body.style.setProperty('--body-background', bodyColor.css());
+    body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
+  };
+
+  detector.detectAllEmotions();
+  detector.detectAllExpressions();
+
+  detector.addEventListener('onImageResultsSuccess', (faces) => {
+    if(faces.length > 0) {
+      const face = faces[0];
+      if (face.emotions.anger > face.emotions.joy) {
+        cool();
+      } else {
+        warm();
+      }
+
+      // console.log(face);
     }
-  </script>
+  })
+
+  detector.start();
+</script>
