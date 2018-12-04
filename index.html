@@ -41,7 +41,7 @@
   const warm = () => {
     // console.log('Warming')
     console.log(bodyColor.hsv().h());
-    if (bodyColor.hsv().h() <= 359 && bodyColor.hsv().h() >= 211) {
+    if (bodyColor.hsv().h() <= 359 && bodyColor.hsv().h() >= 208) {
       bodyColor = bodyColor.spin(1);
       body.style.setProperty('--body-background', bodyColor.css());
       body.style.setProperty('--header-background', bodyColor.lighten(.3).css());
