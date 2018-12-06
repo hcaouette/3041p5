@@ -39,8 +39,6 @@
   let bodyColor = kolor('#a91834');
 
   const warm = () => {
-    // console.log('Warming')
-    console.log(bodyColor.hsv().h());
     if (bodyColor.hsv().h() <= 359 && bodyColor.hsv().h() >= 208) {
       bodyColor = bodyColor.spin(1);
       body.style.setProperty('--body-background', bodyColor.css());
@@ -49,8 +47,6 @@
   };
 
   const cool = () => {
-    // console.log('Cooling');
-    console.log(bodyColor.hsv().h());
     if (bodyColor.hsv().h() >= 210) {
       bodyColor = bodyColor.spin(-1);
       body.style.setProperty('--body-background', bodyColor.css());
@@ -64,13 +60,13 @@
   detector.addEventListener('onImageResultsSuccess', (faces) => {
     if(faces.length > 0) {
       const face = faces[0];
-      if (face.emotions.anger > face.emotions.joy) {
+      if (face.emotions.anger > 0.2) {
         cool();
-      } else {
+      } else if (face.emotions.joy > 90) {
         warm();
       }
 
-      // console.log(face);
+      // console.log(`Anger: ${face.emotions.anger}, Joy: ${face.emotions.joy}`);
     }
   })
 
